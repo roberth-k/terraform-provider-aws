@@ -236,6 +236,8 @@ func waitUntilAutoscalingGroupInstanceRefreshTerminal(
 	case err == errNotTerminal:
 		// work around the .LastError == nil condition in isResourceTimeoutError
 		return &resource.TimeoutError{}
+	case isResourceTimeoutError(err):
+		return err
 	case err != nil:
 		return err
 	default:
